@@ -58,6 +58,7 @@
     <Compile Include="Processors\BookProcessor.cs" />
     <Compile Include="Processors\MembershipProcessor.cs" />
     <Compile Include="Processors\PhysicalProductProcessor.cs" />
+    <Compile Include="ProductAction\MembershipActions.cs" />
     <Compile Include="ProductAction\PaymentSlipGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
