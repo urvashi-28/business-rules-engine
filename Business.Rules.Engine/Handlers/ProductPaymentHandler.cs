@@ -21,24 +21,32 @@ namespace Business.Rules.Engine.Handlers
 
         public void Handle(int productId)
         {
-            var productType = _productTypeCollection.GetProductType(productId);
-
-            switch(productType)
+            try
             {
-                case "PhysicalProduct":
-                    _physicalProductProcessor.Process();
-                    break;
-                case "Book":
-                    break;
-                case "ActivateMembership":
-                    break;
-                case "UpgradeMembership":
-                    break;
-                case "Video":
-                    break;
-                default:
-                    break;
+                var productType = _productTypeCollection.GetProductType(productId);
+
+                switch (productType)
+                {
+                    case "PhysicalProduct":
+                        _physicalProductProcessor.Process();
+                        break;
+                    case "Book":
+                        break;
+                    case "ActivateMembership":
+                        break;
+                    case "UpgradeMembership":
+                        break;
+                    case "Video":
+                        break;
+                    default:
+                        break;
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }            
         }
     }
 }

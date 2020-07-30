@@ -38,5 +38,17 @@ namespace Business.Rules.Enigine.UnitTests.Handlers
             _mockProductTypeCollection.Verify(x => x.GetProductType(productId), Times.Once);
             _mockPhysicalProductProcessor.Verify(x => x.Process(), Times.Once);
         }
+
+        [Test]
+        public void ThrowExceptionIfProductTypeCollectionThrowsAnException()
+        {
+            var productId = 1;
+            _mockProductTypeCollection.Setup(x => x.GetProductType(productId)).Throws<TimeoutException>();
+
+            Assert.Throws<TimeoutException>(() => _productPaymentHandler.Handle(productId));
+
+            _mockProductTypeCollection.Verify(x => x.GetProductType(productId), Times.Once);
+            _mockPhysicalProductProcessor.Verify(x => x.Process(), Times.Never);
+        }
     }
 }

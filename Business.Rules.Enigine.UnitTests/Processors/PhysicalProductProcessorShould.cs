@@ -34,5 +34,29 @@ namespace Business.Rules.Enigine.UnitTests.Processors
             _mockPaymentSlipGenerator.Verify(m => m.GenerateComissionSlip(), Times.Once);
             _mockPaymentSlipGenerator.Verify(m => m.GenerateShippingSlip(), Times.Once);
         }
+
+        [Test]
+        public void ThrowTimeoutExceptionIfGenerateComissionSlipThrowsTimeoutException()
+        {
+            _mockPaymentSlipGenerator.Setup(m => m.GenerateComissionSlip()).Throws<TimeoutException>();
+            _mockPaymentSlipGenerator.Setup(m => m.GenerateShippingSlip()).Returns(true);
+
+            Assert.Throws<TimeoutException>(() => _physicalProductProcessor.Process());
+
+            _mockPaymentSlipGenerator.Verify(m => m.GenerateComissionSlip(), Times.Once);
+            _mockPaymentSlipGenerator.Verify(m => m.GenerateShippingSlip(), Times.Once);
+        }
+
+        [Test]
+        public void ThrowTimeoutExceptionIfGenerateShippingSlipThrowsTimeoutException()
+        {
+            _mockPaymentSlipGenerator.Setup(m => m.GenerateComissionSlip()).Returns(true);
+            _mockPaymentSlipGenerator.Setup(m => m.GenerateShippingSlip()).Throws<TimeoutException>();
+
+            Assert.Throws<TimeoutException>(() => _physicalProductProcessor.Process());
+
+            _mockPaymentSlipGenerator.Verify(m => m.GenerateComissionSlip(), Times.Never);
+            _mockPaymentSlipGenerator.Verify(m => m.GenerateShippingSlip(), Times.Once);
+        }
     }
 }

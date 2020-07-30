@@ -27,7 +27,16 @@ namespace Business.Rules.Engine.Repository
 
         public string GetProductType(int productId)
         {
-            return productType[productId];
+            try
+            {
+                return productType[productId];
+
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }        
     }
 }
