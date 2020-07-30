@@ -28,8 +28,10 @@ namespace Business.Rules.Engine
                 
                 var input = Convert.ToInt32(Console.ReadLine());
                 handler.Handle(input);
+
+                Console.WriteLine("Press Y to continue");
             }
-            while (Console.ReadLine() == "Y");
+            while (Console.ReadLine().ToUpper() == "Y");
 
             Console.WriteLine();
         }

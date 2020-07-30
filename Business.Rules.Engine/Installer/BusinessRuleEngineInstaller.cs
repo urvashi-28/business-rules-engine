@@ -3,6 +3,7 @@ using Business.Rules.Engine.Processors;
 using Business.Rules.Engine.ProductAction;
 using Business.Rules.Engine.Repository;
 using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using System;
@@ -22,13 +23,13 @@ namespace Business.Rules.Engine.Installer
                 throw new ArgumentNullException("container");
             }
 
-            container.Register(Component.For<IProductTypeCollection>().ImplementedBy<ProductTypeCollection>());
+            container.Register(Component.For<IPaymentSlipGenerator>().ImplementedBy<PaymentSlipGenerator>());
+
 
             container.Register(Component.For <IPhysicalProductProcessor>().ImplementedBy<PhysicalProductProcessor>());
             
-            container.Register(Component.For <IPaymentSlipGenerator>().ImplementedBy<PaymentSlipGenerator>());
 
-            container.Register(Component.For<IProductPaymentHandler>().ImplementedBy<ProductPaymentHandler>());
+            container.Register(Component.For<ProductPaymentHandler>());
         }
     }
 }
