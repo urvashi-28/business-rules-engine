@@ -55,6 +55,7 @@
     <Compile Include="Handlers\ProductPaymentHandler.cs" />
     <Compile Include="Installer\BusinessRuleEngineInstaller.cs" />
     <Compile Include="Installer\RepositoriesInstaller.cs" />
+    <Compile Include="Processors\BookProcessor.cs" />
     <Compile Include="Processors\PhysicalProductProcessor.cs" />
     <Compile Include="ProductAction\PaymentSlipGenerator.cs" />
     <Compile Include="Program.cs" />

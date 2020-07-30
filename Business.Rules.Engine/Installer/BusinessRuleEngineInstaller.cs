@@ -27,6 +27,7 @@ namespace Business.Rules.Engine.Installer
 
 
             container.Register(Component.For <IPhysicalProductProcessor>().ImplementedBy<PhysicalProductProcessor>());
+            container.Register(Component.For <IBookProcessor>().ImplementedBy<BookProcessor>());
             
 
             container.Register(Component.For<ProductPaymentHandler>());
