@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Handlers\ProductPaymentHandlerShould.cs" />
+    <Compile Include="Processors\PhysicalProductProcessorShould.cs" />
+    <Compile Include="ProductAction\PaymentSlipGeneratorShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ProductTypeCollectionShould.cs" />
   </ItemGroup>
