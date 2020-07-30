@@ -17,13 +17,15 @@ namespace Business.Rules.Enigine.UnitTests.Handlers
         private ProductPaymentHandler _productPaymentHandler;
         private Mock<IProductTypeCollection> _mockProductTypeCollection;
         private Mock<IPhysicalProductProcessor> _mockPhysicalProductProcessor;
+        private Mock<IBookProcessor> _mockBookProcessor;
 
         [SetUp]
         public void Setup()
         {
             _mockProductTypeCollection = new Mock<IProductTypeCollection>();
             _mockPhysicalProductProcessor = new Mock<IPhysicalProductProcessor>();
-            _productPaymentHandler = new ProductPaymentHandler(_mockProductTypeCollection.Object, _mockPhysicalProductProcessor.Object);
+            _mockBookProcessor = new Mock<IBookProcessor>();
+            _productPaymentHandler = new ProductPaymentHandler(_mockProductTypeCollection.Object, _mockPhysicalProductProcessor.Object, _mockBookProcessor.Object);
         }
 
         [Test]
@@ -49,6 +51,22 @@ namespace Business.Rules.Enigine.UnitTests.Handlers
 
             _mockProductTypeCollection.Verify(x => x.GetProductType(productId), Times.Once);
             _mockPhysicalProductProcessor.Verify(x => x.Process(), Times.Never);
+            _mockBookProcessor.Verify(x => x.Process(), Times.Never);
+        }
+
+        [Test]
+        public void ProcessPaymentWhereProductIdIsForBook()
+        {
+            var productId = 1;
+            _mockProductTypeCollection.Setup(x => x.GetProductType(productId)).Returns("Book");
+            _mockPhysicalProductProcessor.Setup(x => x.Process());
+            _mockBookProcessor.Setup(x => x.Process());
+
+            _productPaymentHandler.Handle(productId);
+
+            _mockProductTypeCollection.Verify(x => x.GetProductType(productId), Times.Once);
+            _mockPhysicalProductProcessor.Verify(x => x.Process(), Times.Never);
+            _mockBookProcessor.Verify(x => x.Process(), Times.Once);
         }
     }
 }
