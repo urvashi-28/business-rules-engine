@@ -44,6 +44,7 @@ namespace Business.Rules.Engine.Handlers
                         _membershipProcessor.UpgradeMembership();
                         break;
                     case "Video":
+                        Console.WriteLine("Option not implemented");
                         break;
                     default:
                         break;

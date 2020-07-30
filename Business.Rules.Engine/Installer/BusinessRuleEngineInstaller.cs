@@ -24,6 +24,7 @@ namespace Business.Rules.Engine.Installer
             }
 
             container.Register(Component.For<IPaymentSlipGenerator>().ImplementedBy<PaymentSlipGenerator>());
+            container.Register(Component.For<IMembershipActions>().ImplementedBy<MembershipActions>());
 
 
             container.Register(Component.For <IPhysicalProductProcessor>().ImplementedBy<PhysicalProductProcessor>());
