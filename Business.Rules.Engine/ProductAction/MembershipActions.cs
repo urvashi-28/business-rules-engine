@@ -20,6 +20,7 @@ namespace Business.Rules.Engine.ProductAction
             // oprations to activate memberships. If operation is successful return true else false.
             try
             {
+                // Call to send email method will be added here
                 return true;
             }
             catch (Exception e)
@@ -34,6 +35,7 @@ namespace Business.Rules.Engine.ProductAction
             // oprations to activate memberships. If operation is successful return true else false.
             try
             {
+                // Call to send email method will be added here
                 return true;
             }
             catch (Exception e)
