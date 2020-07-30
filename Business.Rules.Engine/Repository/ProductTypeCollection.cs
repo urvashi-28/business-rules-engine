@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Business.Rules.Engine.Repository
 {
-    public class ProductTypeCollection
+    public interface IProductTypeCollection
+    {
+        string GetProductType(int productId);
+    }
+
+    public class ProductTypeCollection : IProductTypeCollection
     {
         Dictionary<int, string> productType = new Dictionary<int, string>
         {

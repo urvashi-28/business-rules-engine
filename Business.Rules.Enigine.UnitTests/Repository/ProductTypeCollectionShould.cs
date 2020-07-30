@@ -12,7 +12,7 @@ namespace Business.Rules.Enigine.UnitTests.Repository
     [TestFixture]
     public class ProductTypeCollectionShould
     {
-        private ProductTypeCollection productTypeCollection;
+        private IProductTypeCollection productTypeCollection;
 
         [SetUp]
         public void Setup()
