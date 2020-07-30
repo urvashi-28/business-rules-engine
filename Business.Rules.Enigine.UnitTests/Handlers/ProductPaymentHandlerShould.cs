@@ -18,6 +18,7 @@ namespace Business.Rules.Enigine.UnitTests.Handlers
         private Mock<IProductTypeCollection> _mockProductTypeCollection;
         private Mock<IPhysicalProductProcessor> _mockPhysicalProductProcessor;
         private Mock<IBookProcessor> _mockBookProcessor;
+        private Mock<IMembershipProcessor> _mockMembershipProcessor;
 
         [SetUp]
         public void Setup()
@@ -25,7 +26,12 @@ namespace Business.Rules.Enigine.UnitTests.Handlers
             _mockProductTypeCollection = new Mock<IProductTypeCollection>();
             _mockPhysicalProductProcessor = new Mock<IPhysicalProductProcessor>();
             _mockBookProcessor = new Mock<IBookProcessor>();
-            _productPaymentHandler = new ProductPaymentHandler(_mockProductTypeCollection.Object, _mockPhysicalProductProcessor.Object, _mockBookProcessor.Object);
+            _mockMembershipProcessor = new Mock<IMembershipProcessor>();
+            _productPaymentHandler = new ProductPaymentHandler(
+                _mockProductTypeCollection.Object, 
+                _mockPhysicalProductProcessor.Object, 
+                _mockBookProcessor.Object, 
+                _mockMembershipProcessor.Object);
         }
 
         [Test]
@@ -67,6 +73,36 @@ namespace Business.Rules.Enigine.UnitTests.Handlers
             _mockProductTypeCollection.Verify(x => x.GetProductType(productId), Times.Once);
             _mockPhysicalProductProcessor.Verify(x => x.Process(), Times.Never);
             _mockBookProcessor.Verify(x => x.Process(), Times.Once);
+        }
+
+        [Test]
+        public void ProcessPaymentWhereProductIdIsForActivateMembership()
+        {
+            var productId = 1;
+            _mockProductTypeCollection.Setup(x => x.GetProductType(productId)).Returns("ActivateMembership");
+
+            _productPaymentHandler.Handle(productId);
+
+            _mockProductTypeCollection.Verify(x => x.GetProductType(productId), Times.Once);
+            _mockPhysicalProductProcessor.Verify(x => x.Process(), Times.Never);
+            _mockBookProcessor.Verify(x => x.Process(), Times.Never);
+            _mockMembershipProcessor.Verify(x => x.ActivateMembership(), Times.Once);
+            _mockMembershipProcessor.Verify(x => x.UpgradeMembership(), Times.Never);
+        }
+
+        [Test]
+        public void ProcessPaymentWhereProductIdIsForUpgradeMembership()
+        {
+            var productId = 1;
+            _mockProductTypeCollection.Setup(x => x.GetProductType(productId)).Returns("UpgradeMembership");
+
+            _productPaymentHandler.Handle(productId);
+
+            _mockProductTypeCollection.Verify(x => x.GetProductType(productId), Times.Once);
+            _mockPhysicalProductProcessor.Verify(x => x.Process(), Times.Never);
+            _mockBookProcessor.Verify(x => x.Process(), Times.Never);
+            _mockMembershipProcessor.Verify(x => x.ActivateMembership(), Times.Never);
+            _mockMembershipProcessor.Verify(x => x.UpgradeMembership(), Times.Once);
         }
     }
 }

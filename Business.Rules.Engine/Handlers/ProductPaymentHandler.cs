@@ -13,12 +13,14 @@ namespace Business.Rules.Engine.Handlers
         private IProductTypeCollection _productTypeCollection;
         private IPhysicalProductProcessor _physicalProductProcessor;
         private IBookProcessor _bookProcessor;
+        private IMembershipProcessor _membershipProcessor;
 
-        public ProductPaymentHandler(IProductTypeCollection productTypeCollection, IPhysicalProductProcessor physicalProductProcessor, IBookProcessor bookProcessor)
+        public ProductPaymentHandler(IProductTypeCollection productTypeCollection, IPhysicalProductProcessor physicalProductProcessor, IBookProcessor bookProcessor, IMembershipProcessor membershipProcessor)
         {
             _productTypeCollection = productTypeCollection;
             _physicalProductProcessor = physicalProductProcessor;
             _bookProcessor = bookProcessor;
+            _membershipProcessor = membershipProcessor;
         }
 
         public void Handle(int productId)
@@ -36,8 +38,10 @@ namespace Business.Rules.Engine.Handlers
                         _bookProcessor.Process();
                         break;
                     case "ActivateMembership":
+                        _membershipProcessor.ActivateMembership();
                         break;
                     case "UpgradeMembership":
+                        _membershipProcessor.UpgradeMembership();
                         break;
                     case "Video":
                         break;
