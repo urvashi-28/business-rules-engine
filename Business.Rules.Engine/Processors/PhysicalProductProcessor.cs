@@ -9,7 +9,7 @@ namespace Business.Rules.Engine.Processors
 {
     public interface IPhysicalProductProcessor
     {
-        
+        void Process();
     }
 
     public class PhysicalProductProcessor : IPhysicalProductProcessor
@@ -21,5 +21,13 @@ namespace Business.Rules.Engine.Processors
             _paymentSlipGenerator = paymentSlipGenerator;
         }
 
+        public void Process()
+        {
+            var shippingSlipResult = _paymentSlipGenerator.GenerateShippingSlip() ? "Payment Slip generated successfully" : "Error in generating Payment Slip";
+            var comissionSlipResult = _paymentSlipGenerator.GenerateComissionSlip() ? "Comission Slip generated successfully" : "Error in generating Comission Slip";
+
+            Console.WriteLine(shippingSlipResult);
+            Console.WriteLine(comissionSlipResult);
+        }
     }
 }

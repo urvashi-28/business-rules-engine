@@ -22,5 +22,17 @@ namespace Business.Rules.Enigine.UnitTests.Processors
             _mockPaymentSlipGenerator = new Mock<IPaymentSlipGenerator>();
             _physicalProductProcessor = new PhysicalProductProcessor(_mockPaymentSlipGenerator.Object);
         }
+
+        [Test]
+        public void ProcessShippingAndCommissionSlipWhenSlipGeneratorReturnedTrue()
+        {
+            _mockPaymentSlipGenerator.Setup(m => m.GenerateComissionSlip()).Returns(true);
+            _mockPaymentSlipGenerator.Setup(m => m.GenerateShippingSlip()).Returns(true);
+
+            _physicalProductProcessor.Process();
+
+            _mockPaymentSlipGenerator.Verify(m => m.GenerateComissionSlip(), Times.Once);
+            _mockPaymentSlipGenerator.Verify(m => m.GenerateShippingSlip(), Times.Once);
+        }
     }
 }
